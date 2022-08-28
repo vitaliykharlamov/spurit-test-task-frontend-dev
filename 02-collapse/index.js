@@ -6,12 +6,14 @@ const content = document.querySelector('.collapsible__content');
 let isShowContent;
 
 function showContent() {
+    content.style.transform = 'translateX(0%)';
     textBtnVisible.style.display = 'block';
     textBtnHidden.style.display = 'none';
     isShowContent = true;
 }
 
 function hideContent() {
+    content.style.transform = 'translateX(-100%)';
     textBtnVisible.style.display = 'none';
     textBtnHidden.style.display = 'block';
     isShowContent = false;
@@ -19,22 +21,22 @@ function hideContent() {
 
 hideContent();
 
-const animateContent = content.animate([
+const animateContentShow = content.animate([
     {transform: 'translateX(-100%)'}, 
     {transform: 'translateX(0%)'}
-], {
-    duration: 500,
-    fill: 'backwards'
-});
+], 300);
 
-animateContent.pause();
+const animateContentHide = content.animate([
+    {transform: 'translateX(0%)'}, 
+    {transform: 'translateX(-100%)'}
+], 300);
 
 button.addEventListener('click', () => {
     if (isShowContent) {
+        animateContentHide.play();
         hideContent();
-        animateContent.reverse();
     } else {
+        animateContentShow.play();
         showContent();
-        animateContent.play();
     }
 });
